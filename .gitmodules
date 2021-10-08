@@ -1,3 +1,6 @@
 [submodule "ask"]
 	path = ask
 	url = git@github.com:daniel-davee/ask.git
+[submodule "magic_dict"]
+	path = magic_dict
+	url = git@github.com:daniel-davee/magic_dict.git
