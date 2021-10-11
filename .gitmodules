@@ -1,3 +1,12 @@
 [submodule "magic_dict"]
 	path = magic_dict
 	url = git@github.com:daniel-davee/magic_dict.git
+[submodule "test_magic"]
+	path = test_magic
+	url = git@github.com:daniel-davee/test_magic.git
+[submodule "run_cmd"]
+	path = run_cmd
+	url = git@github.com:daniel-davee/run_cmd.git
+[submodule "future_feature"]
+	path = future_feature
+	url = git@github.com:daniel-davee/future_feature.git
