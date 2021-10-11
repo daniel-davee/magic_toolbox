@@ -7,3 +7,6 @@
 [submodule "test_magic"]
 	path = test_magic
 	url = git@github.com:daniel-davee/test_magic.git
+[submodule "run_cmd"]
+	path = run_cmd
+	url = git@github.com:daniel-davee/run_cmd.git
