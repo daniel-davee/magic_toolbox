@@ -4,3 +4,6 @@
 [submodule "magic_dict"]
 	path = magic_dict
 	url = git@github.com:daniel-davee/magic_dict.git
+[submodule "test_magic"]
+	path = test_magic
+	url = git@github.com:daniel-davee/test_magic.git
