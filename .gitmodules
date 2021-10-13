@@ -10,3 +10,6 @@
 [submodule "future_feature"]
 	path = future_feature
 	url = git@github.com:daniel-davee/future_feature.git
+[submodule "ask"]
+	path = ask
+	url = git@github.com:daniel-davee/ask.git
