@@ -4,12 +4,12 @@
 [submodule "test_magic"]
 	path = test_magic
 	url = git@github.com:daniel-davee/test_magic.git
-[submodule "run_cmd"]
-	path = run_cmd
-	url = git@github.com:daniel-davee/run_cmd.git
 [submodule "future_feature"]
 	path = future_feature
 	url = git@github.com:daniel-davee/future_feature.git
 [submodule "ask"]
 	path = ask
 	url = git@github.com:daniel-davee/ask.git
+[submodule "run_cmd"]
+	path = run_cmd
+	url = git@github.com:daniel-davee/run_cmd.git
