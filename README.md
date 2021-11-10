@@ -3,7 +3,7 @@ A magic toolbox to hold all your tools you use, with few tools included.
 But this will allow to create a local directory named tool_box,
 then create symbolic to the package in the toolbox directory. This way for
 small utils you use but don't want to turn into a pypy package but you're tried of copying over
-can easily be added to any project.
+can easily be added to any project. For more information at the feature files in features direcory.
 
 ## Install
 
