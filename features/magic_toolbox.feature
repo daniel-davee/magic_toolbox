@@ -24,11 +24,10 @@ Feature:Magic Toolbox CLI; A toolbox management tool written in python
 
     Background:
     Given logging level is info
+    #  And magic_toolox.py is installed  
      And safe_rm is False as bool
-     And toolbox is DNE
-     And ./toolbox/mtb.yml is DNE
   
   Scenario: magic_toolbox add ask
-    When run cmd ./magic_toolbox add ask
-     Then ./toolbox/mtb.yml exist
-     And ./toolbox/ask exist
+    When run cmd ./magic_toolbox.py add ask
+     Then ./tool_box/mtb.yml exist
+     And ./tool_box/ask exist

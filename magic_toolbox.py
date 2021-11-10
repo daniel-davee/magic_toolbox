@@ -10,7 +10,7 @@ from ask.ask import yes_or_no
 
 logger = Logger(__name__)
 
-logger.set_minimum_level(logger.logLevels['debug'])
+logger.set_minimum_level(logger.logLevels['warn'])
 logger.set_log_file_basename(__name__)
 # fmt = "[%(levelname)s] - %(asctime)s - %(name)s - :  in %(pathname)s:%(lineno)d \n%(message)s"
 # logger._Logger__logTypeFormats = {level:fmt for level in logger.logLevels}
@@ -55,6 +55,7 @@ class MagicToolBox(object):
         tool_box, mtb = files
         debug_msg = f"""
                         {getframeinfo(currentframe())=}
+                        What is {self.mwd.absolute()=}?
                         Whats is cwd?: {cwd=}
                         what is {files=}?
                         Is {yes_or_no(f'{tool_box=} a directory?', tool_box.is_dir())}
@@ -83,13 +84,13 @@ class MagicToolBox(object):
             logger.error(msg)
             raise ValueError(msg)
         
-        des = (tool_box / tool_name)
-        src = ( self.mwd / tool_name)
+        des = (tool_box / tool_name).absolute()
+        src = ( self.mwd / tool_name).absolute()
         
         
         debug_msg = f"""
                         what is {str(des.absolute())=}?
-                        what is {str(src.absolute())=}
+                        what is {str(src.absolute())=}?
                         {yes_or_no('is src == des?', src == des)}"""
         logger.debug(debug_msg)
         assert des != src, f"""{yes_or_no(f'is {des=} equal to {src=}?', des == src)}"""
@@ -98,13 +99,13 @@ class MagicToolBox(object):
             des.unlink()
         debug_msg = f"""
                         {yes_or_no('does {src=} is dir?', src.is_dir())}
-                        {yes_or_no('is {des.is_symlink()=}?',des.is_symlink())}
-                        if yes something is very wrong because the if 
-                        above should have fixed it"""
+                        {yes_or_no('is {des.is_symlink()=}?',des.is_symlink())}"""
         logger.debug(debug_msg)
             
-        des.symlink_to(src, target_is_directory=True)
+        des.symlink_to(src)
         debug_msg = f"""
+                        what is {str(des.absolute())=}?
+                        what is {str(src.absolute())=}?
                         {yes_or_no(f'is {des=} as sym link?', des.is_symlink())}"""
         logger.debug(debug_msg)
         
