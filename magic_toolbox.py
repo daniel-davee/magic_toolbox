@@ -1,5 +1,5 @@
 #!/home/mage/anaconda3/envs/magic38/bin/python
-from os import SEEK_CUR
+from os import environ, error
 from yaml import load, FullLoader
 from pysimplelog import Logger
 from run_cmd.run_cmd import run_cmd
@@ -12,12 +12,7 @@ logger = Logger(__name__)
 
 logger.set_minimum_level(logger.logLevels['warn'])
 logger.set_log_file_basename(__name__)
-# fmt = "[%(levelname)s] - %(asctime)s - %(name)s - :  in %(pathname)s:%(lineno)d \n%(message)s"
-# logger._Logger__logTypeFormats = {level:fmt for level in logger.logLevels}
-log_header = """############################
-                file_name:{}
-                line_number:{}
-                """
+
 class MagicToolBox(object):
     
     """[summary]
@@ -25,8 +20,8 @@ class MagicToolBox(object):
     Raises:
         plac.Interpreter.Exit: [signals to exit interactive interpreter]
     """
-    
-    mwd = Path(__file__).parent
+    home = environ['HOME']
+    mwd = Path(f'{home}/magic_workspace/magic_toolbox/')
     
     tools = set([t.stem for t in mwd.iterdir() if (t / '__init__.py').exists()])
     
@@ -69,20 +64,20 @@ class MagicToolBox(object):
                         """
         logger.debug(debug_msg)
                         
-        debug_msg = f""" Is{yes_or_no(f"{tool_name=} in {self.tools}", tool_name in self.tools)}
+        debug_msg = f"""Is{yes_or_no(f"{tool_name=} in {self.tools}", tool_name in self.tools)}
                         """
         logger.debug(debug_msg)
                         
         if tool_name not in self.tools:
             ls = run_cmd(f'ls {self.mwd.absolute()}',split=True)
-            msg = f"""{tool_name=} is not in {self.tools=}
-                    what is in {self.mwd.absolute()=} using ls?
-                    {ls=}
-                    {yes_or_no(f'is {tool_name=} in {self.mwd.absolute()}',tool_name in ls)}
-                    {yes_or_no(f'is {tool_name=} in {self.tools}',tool_name in ls)}
-                    that should definitly be no"""
-            logger.error(msg)
-            raise ValueError(msg)
+            error_msg = f"""{tool_name=} is not in {self.tools=}
+                             what is in {self.mwd.absolute()=} using ls?
+                             {ls=}
+                             {yes_or_no(f'is {tool_name=} in {self.mwd.absolute()}',tool_name in ls)}
+                             {yes_or_no(f'is {tool_name=} in {self.tools}',tool_name in ls)}
+                             that should definitly be no"""
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         
         des = (tool_box / tool_name).absolute()
         src = ( self.mwd / tool_name).absolute()
