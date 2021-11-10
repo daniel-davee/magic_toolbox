@@ -1,8 +1,10 @@
 #!/home/mage/anaconda3/envs/magic38/bin/python
+from os import SEEK_CUR
 from yaml import load, FullLoader
 from pysimplelog import Logger
 from run_cmd.run_cmd import run_cmd
 from pathlib import Path
+from inspect import currentframe, getframeinfo
 import plac
 from ask.ask import yes_or_no
 
@@ -10,9 +12,12 @@ logger = Logger(__name__)
 
 logger.set_minimum_level(logger.logLevels['debug'])
 logger.set_log_file_basename(__name__)
-fmt = "[%(levelname)s] - %(asctime)s - %(name)s - :  in %(pathname)s:%(lineno)d \n%(message)s"
-logger._Logger__logTypeFormats = {level:fmt for level in logger.logLevels}
-
+# fmt = "[%(levelname)s] - %(asctime)s - %(name)s - :  in %(pathname)s:%(lineno)d \n%(message)s"
+# logger._Logger__logTypeFormats = {level:fmt for level in logger.logLevels}
+log_header = """############################
+                file_name:{}
+                line_number:{}
+                """
 class MagicToolBox(object):
     
     """[summary]
@@ -49,15 +54,23 @@ class MagicToolBox(object):
         if not all([f.exists() for f in files]): self.init()
         tool_box, mtb = files
         debug_msg = f"""
-                        whats is cwd?: {cwd=}
-                        {yes_or_no(f'{tool_box=} is a directory?', tool_box.is_dir())}
+                        {getframeinfo(currentframe())=}
+                        Whats is cwd?: {cwd=}
+                        Is {yes_or_no(f'{tool_box=} a directory?', tool_box.is_dir())}
                         {yes_or_no(f'{mtb=} exists?', mtb.exists())}
-                        What is {mtb=} and {mtb.read_text()=}?
-                        #####
+                        What is {mtb=}?
                         """
         logger.debug(debug_msg)
                         
         mtb = load(mtb.read_text(), Loader=FullLoader)
+        debug_msg = f"""What is mtb{mtb=}?
+                        """
+        logger.debug(debug_msg)
+                        
+        debug_msg = f""" Is{yes_or_no(f"{tool_name=} in {self.tools}", tool_name in self.tools)}
+                        """
+        logger.debug(debug_msg)
+                        
         if tool_name not in self.tools:
             ls = run_cmd(f'ls {self.mwd.absolute()}',split=True)
             msg = f"""{tool_name=} is not in {self.tools=}
@@ -68,18 +81,24 @@ class MagicToolBox(object):
                     that should definitly be no"""
             logger.error(msg)
             raise ValueError(msg)
+        
         des = (tool_box / tool_name)
         src = ( self.mwd / tool_name)
-        if des.is_symlink():
-            des.unlink()
         debug_msg = f"""
                         what is {str(des.absolute())=}?
                         what is {str(src.absolute())=}
-                        yes_or_no('is src == des?', src == des)
-                        yes_or_no('does {src=} is dir?', src.is_dir())
-                        {yes_or_no('is {des.is_symlink()=}?',des.is_symlink())}
-                        if yes something is very wrong because the if above should have fixed it"""
+                        {yes_or_no('is src == des?', src == des)}"""
         logger.debug(debug_msg)
+                        
+        if des.is_symlink():
+            des.unlink()
+        debug_msg = f"""
+                        {yes_or_no('does {src=} is dir?', src.is_dir())}
+                        {yes_or_no('is {des.is_symlink()=}?',des.is_symlink())}
+                        if yes something is very wrong because the if 
+                        above should have fixed it"""
+        logger.debug(debug_msg)
+            
         des.symlink_to(src)
         debug_msg = f"""
                         {yes_or_no(f'is {des=} as sym link?', des.is_symlink())}"""
