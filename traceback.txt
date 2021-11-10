@@ -1,0 +1,39 @@
+Traceback (most recent call last):
+  File "/home/mage/anaconda3/envs/magic38/lib/python3.8/site-packages/pudb/__init__.py", line 152, in runscript
+    dbg._runscript(mainpyfile)
+  File "/home/mage/anaconda3/envs/magic38/lib/python3.8/site-packages/pudb/debugger.py", line 502, in _runscript
+    self.run(statement)
+  File "/home/mage/anaconda3/envs/magic38/lib/python3.8/bdb.py", line 580, in run
+    exec(cmd, globals, locals)
+  File "<string>", line 1, in <module>
+  File "magic_toolbox.py", line 89, in <module>
+    plac.Interpreter.call(MagicToolBox)
+  File "/home/mage/anaconda3/envs/magic38/lib/python3.8/site-packages/plac_ext.py", line 1161, in call
+    print(out)
+  File "/home/mage/anaconda3/envs/magic38/lib/python3.8/site-packages/plac_ext.py", line 933, in __exit__
+    self.close(exctype, exc, tb)
+  File "/home/mage/anaconda3/envs/magic38/lib/python3.8/site-packages/plac_ext.py", line 971, in close
+    self._interpreter.throw(exctype, exc, tb)
+  File "/home/mage/anaconda3/envs/magic38/lib/python3.8/site-packages/plac_ext.py", line 983, in _make_interpreter
+    arglist = yield task
+  File "/home/mage/anaconda3/envs/magic38/lib/python3.8/site-packages/plac_ext.py", line 1158, in call
+    raise_(task.etype, task.exc, task.tb)
+  File "/home/mage/anaconda3/envs/magic38/lib/python3.8/site-packages/plac_ext.py", line 66, in raise_
+    raise exc.with_traceback(tb)
+  File "/home/mage/anaconda3/envs/magic38/lib/python3.8/site-packages/plac_ext.py", line 399, in _wrap
+    for value in genobj:
+  File "/home/mage/anaconda3/envs/magic38/lib/python3.8/site-packages/plac_ext.py", line 113, in gen_exc
+    raise_(etype, exc, tb)
+  File "/home/mage/anaconda3/envs/magic38/lib/python3.8/site-packages/plac_ext.py", line 66, in raise_
+    raise exc.with_traceback(tb)
+  File "/home/mage/anaconda3/envs/magic38/lib/python3.8/site-packages/plac_ext.py", line 985, in _make_interpreter
+    cmd, result = self.parser.consume(arglist)
+  File "/home/mage/anaconda3/envs/magic38/lib/python3.8/site-packages/plac_core.py", line 278, in consume
+    return cmd, self.func(*(args + varargs + extraopts), **kwargs)
+  File "magic_toolbox.py", line 51, in add
+    debug_msg = f"""
+  File "/home/mage/anaconda3/envs/magic38/lib/python3.8/pathlib.py", line 1236, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+  File "/home/mage/anaconda3/envs/magic38/lib/python3.8/pathlib.py", line 1222, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+IsADirectoryError: [Errno 21] Is a directory: '/home/mage/magic_workspace/magic_toolbox/tool_box'
