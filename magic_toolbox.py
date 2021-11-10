@@ -50,12 +50,13 @@ class MagicToolBox(object):
         adds a tool named tool_name if exist
         """ 
         cwd = Path.cwd()
-        files = [cwd / f for f in {'tool_box','tool_box/mtb.yml'}]
+        files = [cwd / f for f in ['tool_box','tool_box/mtb.yml']]
         if not all([f.exists() for f in files]): self.init()
         tool_box, mtb = files
         debug_msg = f"""
                         {getframeinfo(currentframe())=}
                         Whats is cwd?: {cwd=}
+                        what is {files=}?
                         Is {yes_or_no(f'{tool_box=} a directory?', tool_box.is_dir())}
                         {yes_or_no(f'{mtb=} exists?', mtb.exists())}
                         What is {mtb=}?
@@ -84,11 +85,14 @@ class MagicToolBox(object):
         
         des = (tool_box / tool_name)
         src = ( self.mwd / tool_name)
+        
+        
         debug_msg = f"""
                         what is {str(des.absolute())=}?
                         what is {str(src.absolute())=}
                         {yes_or_no('is src == des?', src == des)}"""
         logger.debug(debug_msg)
+        assert des != src, f"""{yes_or_no(f'is {des=} equal to {src=}?', des == src)}"""
                         
         if des.is_symlink():
             des.unlink()
@@ -99,7 +103,7 @@ class MagicToolBox(object):
                         above should have fixed it"""
         logger.debug(debug_msg)
             
-        des.symlink_to(src)
+        des.symlink_to(src, target_is_directory=True)
         debug_msg = f"""
                         {yes_or_no(f'is {des=} as sym link?', des.is_symlink())}"""
         logger.debug(debug_msg)
