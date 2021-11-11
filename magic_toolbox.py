@@ -10,7 +10,7 @@ from ask.ask import yes_or_no
 
 logger = Logger(__name__)
 
-logger.set_minimum_level(logger.logLevels['warn'])
+logger.set_minimum_level(logger.logLevels['debug'])
 logger.set_log_file_basename(__name__)
 
 class MagicToolBox(object):
@@ -25,11 +25,15 @@ class MagicToolBox(object):
     
     tools = set([t.stem for t in mwd.iterdir() if (t / '__init__.py').exists()])
     
-    commands = 'quit', 'add', 'init', 
+    commands = 'quit', 'exit', 'add', 'init', 
     
     def quit(self):
         "quits the interpreter"
         raise plac.Interpreter.Exit
+
+    def exit(self):
+        "exits the interpreter"
+        self.quit()
 
     def init(self):
         """[setup toolbox directory and mtb.yml]
@@ -39,20 +43,25 @@ class MagicToolBox(object):
         tool_box.mkdir(exist_ok=True)
         mtb = (tool_box / 'mtb.yml')
         mtb.touch(exist_ok=True)
+        _init_ = (tool_box / '__init__.py')
+        _init_.touch(exist_ok=True)
 
     def add(self,tool_name):
         """
         adds a tool named tool_name if exist
         """ 
         cwd = Path.cwd()
-        files = [cwd / f for f in ['tool_box','tool_box/mtb.yml']]
-        if not all([f.exists() for f in files]): self.init()
-        tool_box, mtb = files
+        files = [cwd / f for f in ['tool_box', 'tool_box/mtb.yml']]
         debug_msg = f"""
                         {getframeinfo(currentframe())=}
                         What is {self.mwd.absolute()=}?
                         Whats is cwd?: {cwd=}
                         what is {files=}?
+                        """
+        
+        if not all([f.exists() for f in files]): self.init()
+        tool_box, mtb = files
+        debug_msg = f"""
                         Is {yes_or_no(f'{tool_box=} a directory?', tool_box.is_dir())}
                         {yes_or_no(f'{mtb=} exists?', mtb.exists())}
                         What is {mtb=}?

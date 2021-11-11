@@ -21,9 +21,9 @@ Step 2 uses behave framwork to install and test build
 
 ## Todo
 
+    [*] add an __init__.py to toolbox
     [] Pyinstaller forced a work around in getting the tool list 
     [] define mtb.yml structure
-    [] add an __init__.py to toolbox
     [] implement list and remove
 
 

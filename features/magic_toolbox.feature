@@ -23,11 +23,14 @@ Feature:Magic Toolbox CLI; A toolbox management tool written in python
   to reflect this.
 
     Background:
-    Given logging level is info
+    #can be used to change the log level
+    Given logging level is info 
      And magic_toolox.py is installed  
      And safe_rm is False as bool
   
   Scenario: magic_toolbox add ask
+    # When run cmd ./magic_toolbox.py add ask
     When run cmd magic_toolbox add ask
      Then ./tool_box/mtb.yml exist
+     And ./tool_box/__init__.py exist
      And ./tool_box/ask exist
