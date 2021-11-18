@@ -1,11 +1,10 @@
 from pysimplelog import Logger 
 from behave import*
 from pathlib import Path
-import magic_dict
 from run_cmd.run_cmd import run_cmd
 from magic_dict.magic_dict import Magic_dict
 from magic_toolbox import MagicToolBox
-from ask.ask import yes_or_no
+from yes_or_no.yes_or_no import yes_or_no
 from os import environ
 
 logger = Logger(__name__)
