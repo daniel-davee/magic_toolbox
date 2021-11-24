@@ -1,14 +1,12 @@
 from behave import *
-from magic_dict import Magic_dict
+from magic_dict.magic_dict import Magic_dict
+from yes_or_no.yes_or_no import yes_or_no
 from typing import Any
 from pysimplelog import Logger
 
 logger = Logger(__name__)
 logger.set_log_file_basename('run_cmd')
 
-def yes_or_no(question:str, answer:bool):
-    return question + '\n' + ('yes' if answer else 'no')
-    
 def value_as_type(value,type_):
     return eval(type_)(value)
 
@@ -142,7 +140,7 @@ def step_impl(context,key:str):
             {yes_or_no('is key in foo?',key in context.foo)}"""
     assert key not in context.foo, msg
 
-@given(u'foo does not have attr {attr}')
+@given(u'foo does not have {attr}')
 def step_impl(context,attr):
     """[foo does not have attr {attr}]
     """

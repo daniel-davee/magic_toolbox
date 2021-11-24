@@ -6,7 +6,7 @@ from run_cmd.run_cmd import run_cmd
 from pathlib import Path
 from inspect import currentframe, getframeinfo
 import plac
-from ask.yes_or_no import yes_or_no
+from yes_or_no.yes_or_no import yes_or_no
 
 logger = Logger(__name__)
 

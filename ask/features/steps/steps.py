@@ -1,7 +1,6 @@
 from behave import *
 from pysimplelog import Logger
 from yes_or_no.yes_or_no import yes_or_no
-
 from magic_dict.magic_dict import Magic_dict
 
 logger = Logger(__name__)

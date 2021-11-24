@@ -24,7 +24,7 @@ Feature:Magic Toolbox CLI; A toolbox management tool written in python
 
     Background:
     #can be used to change the log level
-    Given logging level is info 
+    Given log level is set to info 
      And magic_toolox.py is installed  
      And safe_rm is False as bool
   
