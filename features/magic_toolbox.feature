@@ -1,36 +1,27 @@
 @magic_toolbox@cli
 Feature:Magic Toolbox CLI; A toolbox management tool written in python
-  #TODO the will be a lib verision which will allow you to manage
-  #Includes more dynamically, but I need to flesh out how I want to work
-
-  Magic Toolbox CLI will be a tool that will allow create a custom toolbox folder
-  with symbolic links to python util packages kept in local repo or if they CLI they
-  can be access through magic_toolbox [OPTION] TOOLNAME [OPTION] args. 
-  
-  magic_toolbox add toolname: will create toolbox folder if toolbox folder DNE. Then it checks if
-  toolname references a tool in magic_toolbox; if yes then create a symbolic link in toolbox
-  to tool folder, if not raise an error. If mtb.yml DNE create mtb.yml, and saving settings and
-  tools.
-
-  then python scripts in that folder should be able to import the package 
-  
-  magic_toolbox remove toolname: will check if toolname references a tool in toolbox; if yes
-  unlink and remove reference from mtb.yml else raise an error.
-
-  then there should not be a link in toolbox
-
-  magic_toolbox init will create a toolbox and loud default_tools of the MTB object and create mtb.yml 
-  to reflect this.
-
+  magic_toolbox init [dir=.] : if __init__.py does not exist in dir, 
+  this will create, then it will append to the end of the file code 
+  that will add magic_toolbox to you python path.
+  magic_toolbox add [dir=., copy=False]: runs init adds a sym_link of dir, in 
+  magic_toolbox directory, if copy it will do a full copy. 
     Background:
     #can be used to change the log level
-    Given log level is set to info 
-     And magic_toolox.py is installed  
-     And safe_rm is False as bool
-  
-  Scenario: magic_toolbox add ask
+    Given log level is set to debug 
+     And magic_toolbox has ben installed
+     And reset is run_cmd('rm -rf ~/temp')
+   
+  Scenario: magic_toolbox init
     # When run cmd ./magic_toolbox.py add ask
-    When run cmd magic_toolbox add ask
-     Then ./tool_box/mtb.yml exist
-     And ./tool_box/__init__.py exist
-     And ./tool_box/ask exist
+    Given target is (Path.home()/'temp')
+    And tool_box is this.target() / 'tool_box'
+    And init is this.tool_box() / '__init__.py'
+    And mwd is str(mwd)
+    And op is this.target().mkdir()
+    And cmd is f"magic_toolbox init {str(this.target())}"
+    When run is run_cmd(this.cmd())
+    And exists is this.init().exists()
+    And cat is run_cmd('cat ~/temp/tool_box/__init__.py')
+    Then exists is True
+    Then mwd in this.cat()
+    Given reset is run_cmd('rm -rf ~/temp')
