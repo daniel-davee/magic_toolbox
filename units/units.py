@@ -1,0 +1,16 @@
+nano = 1e-9
+micro = 1e-6
+milli = 1e-3
+unit = 1e0
+kilo = 1e3
+mega = 1e6
+giga = 1e9
+terra = 1e12
+peta = 1e15
+exo = 1e18
+zetta = 1e21
+second = 1
+hour = 60* second
+day = 24* hour
+month = 30.4 *day
+year = 365 *day
