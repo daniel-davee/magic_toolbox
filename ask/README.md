@@ -1,2 +1,0 @@
-# ask
-ask some questions
