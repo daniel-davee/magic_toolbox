@@ -1,11 +1,15 @@
-from inspect import currentframe, getframeinfo
-from pathlib import Path
-import plac
+from plac import Interpreter
+from typing import Callable
+from importlib import import_module
+from inspect import getmembers, isfunction
 
 
-mwd = Path(__file__).parent.absolute()
-
-
+def get_tools() -> list[tuple[str,Callable]]:
+    tools = import_module('toolbox.tools')
+    return [ (n,tool) 
+            for n,tool in getmembers(tools) 
+            if isfunction(tool)]
+    
 class MagicToolBox(object):
     
     """
@@ -17,11 +21,10 @@ class MagicToolBox(object):
     
  
     
-    commands = 'create', 
-    
-    def create_project(name:('The name of project','positional')):
-        ...
-    
+    commands = tuple(n for n,_ in get_tools()) 
+   
+for name,tool in get_tools():
+    setattr(MagicToolBox,name,tool) 
         
 if __name__ == '__main__':
-    plac.Interpreter.call(MagicToolBox)
+    Interpreter.call(MagicToolBox)
