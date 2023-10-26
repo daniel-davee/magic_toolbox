@@ -19,11 +19,25 @@ You can use this as help message.
     cli:Path = project / f'{name}.py'
     class_name = name.capitalize()
     cli.write_text(f"""from plac import Interpreter
+from typing import Callable
+from importlib import import_module
+from inspect import getmembers, isfunction
 
-class {class_name}():
-commands = tuple()
 
-if __name__ =='__main__':
-Interpreter.call({class_name})
-    """)
+def get_tools() -> list[tuple[str,Callable]]:
+    tools = import_module('toolbox.tools')
+    return [ (n,tool) 
+            for n,tool in getmembers(tools) 
+            if isfunction(tool)]
     
+class {class_name}(object):
+    
+    commands = tuple(n for n,_ in get_tools()) 
+   
+for name,tool in get_tools():
+    setattr(MagicToolBox,name,tool) 
+        
+if __name__ == '__main__':
+    Interpreter.call({class_name})
+    """)
+    print(f'Created {name}/{name}.py and {name}/toolbox/tools.py')
