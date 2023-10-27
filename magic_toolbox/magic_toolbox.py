@@ -25,6 +25,9 @@ class MagicToolBox(object):
    
 for name,tool in get_tools():
     setattr(MagicToolBox,name,tool) 
+
+def main():
+    Interpreter.call(MagicToolBox)
         
 if __name__ == '__main__':
-    Interpreter.call(MagicToolBox)
+    main()
