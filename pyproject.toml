@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "magic-toolbox"
-version = "0.1.5"
+version = "0.1.6"
 description = "A cli framwork in same vane as django"
 authors = ["daniel davee <daniel.v.davee@gmail.com>"]
 license = "Apache2.0"
 readme = "README.md"
-packages = [{include = "magic_toolbox"}, {include = "toolbox"}]
+packages = [{include = "magic_toolbox"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"

@@ -2,8 +2,11 @@ from plac import Interpreter
 from typing import Callable
 from importlib import import_module
 from inspect import getmembers, isfunction
-
-
+from tools import (
+                    create_project,
+                    init,
+                    add_function,
+                    )
 def get_tools() -> list[tuple[str,Callable]]:
     tools = import_module('tools')
     return [ (n,tool) 
@@ -21,10 +24,12 @@ class MagicToolBox(object):
     
  
     
-    commands = tuple(n for n,_ in get_tools()) 
+    commands = 'create_project','init','add_function' 
+    
+    create_project = create_project
+    init = init
+    add_function = add_function
    
-for name,tool in get_tools():
-    setattr(MagicToolBox,name,tool) 
 
 def main():
     Interpreter.call(MagicToolBox)
