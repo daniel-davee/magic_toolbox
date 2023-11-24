@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "magic-toolbox"
-version = "0.1.6"
+version = "0.1.7"
 description = "A cli framwork in same vane as django"
 authors = ["daniel davee <daniel.v.davee@gmail.com>"]
 license = "Apache2.0"
