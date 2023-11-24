@@ -5,7 +5,7 @@ from inspect import getmembers, isfunction
 
 
 def get_tools() -> list[tuple[str,Callable]]:
-    tools = import_module('toolbox.tools')
+    tools = import_module('tools')
     return [ (n,tool) 
             for n,tool in getmembers(tools) 
             if isfunction(tool)]
