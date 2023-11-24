@@ -5,11 +5,13 @@ def create_project(self,name:('The name of project','positional')):
     Creates a plac cli project.
     '''
     project= Path(name)
-    if project.exists():
+    if name:
+        if project.exists():
+            raise Exception(f'{name} already exists!')
+        project.mkdir()
+    tools = project/'tools.py'
+    if tools.exists():
         raise Exception(f'{name} already exists!')
-    project.mkdir()
-    (toolbox:=project/'toolbox').mkdir()
-    tools = toolbox/'tools.py'
     tools.write_text(f"""def {name}(self,):
     '''
     This is just a dummy sub command to use as an example.
@@ -25,7 +27,7 @@ from inspect import getmembers, isfunction
 
 
 def get_tools() -> list[tuple[str,Callable]]:
-    tools = import_module('toolbox.tools')
+    tools = import_module('tools')
     return [ (n,tool) 
             for n,tool in getmembers(tools) 
             if isfunction(tool)]
@@ -40,13 +42,13 @@ for name,tool in get_tools():
 if __name__ == '__main__':
     Interpreter.call({class_name})
     """)
-    print(f'Created {name}/{name}.py and {name}/toolbox/tools.py')
+    print(f'Created {name}/{name}.py and {name}/tools.py')
     
 def add_function(self,name:('The name of function','positional')):
     '''
     This creates a new function in toolbox.tools
     '''
-    tools = Path('toolbox/tools.py')
+    tools = Path('tools.py')
     if not tools.exists():
         raise Exception('No toolbox.tools run magic_toolbox init')
     new_function:str=f"""def {name}(self):
@@ -64,7 +66,7 @@ def init(self):
     '''
     Add tool.toolbox to this directory.
     '''
-    tools:Path = Path('toolbox/tools.py')
-    if tools.exists() or tools.parent.exists():
-        raise Exception('toolbox.tools already exists')
+    tools:Path = Path('tools.py')
+    if tools.exists():
+        raise Exception('tools.py already exists')
     create_project(self, '') 
