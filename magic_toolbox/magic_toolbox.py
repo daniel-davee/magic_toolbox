@@ -75,9 +75,9 @@ if __name__ == '__main__':
         if not tools.exists():
             raise Exception('No toolbox.tools run magic_toolbox init')
         new_function:str=f"""def {name}(self):
-'''
-Put your doc string here
-'''
+    '''
+    Put your doc string here
+    '''
         """
         tool_box = tools.read_text()
         tool_box = '\n'.join([tool_box,'',new_function])
@@ -92,7 +92,7 @@ Put your doc string here
         tools:Path = Path('tools.py')
         if tools.exists():
             raise Exception('tools.py already exists')
-        create_project(self, '') 
+        self.create_project(self, '') 
    
 
 def main():

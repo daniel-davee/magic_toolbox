@@ -9,14 +9,18 @@ def test_create_project():
     assert py.exists()
     assert tool.exists()
     out = run_cmd('python foo/foo.py -h')
-    assert '''
-special commands
+    assert '''special commands
 ================
 .last_tb
 
 custom commands
 ===============
 foo  help
-
 ''' in out
+    from os import chdir
+    chdir(foo:=Path('foo'))
+    run_cmd('python ../magic_toolbox.py add_function bar')
+    out = run_cmd('python foo.py bar -h')
+    assert 'usage: foo.py bar [-h]' in out
+    chdir(foo.parent)
     run_cmd('rm -rf foo')
