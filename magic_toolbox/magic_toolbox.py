@@ -3,13 +3,18 @@ from typing import Callable
 from importlib import import_module
 from inspect import getmembers, isfunction
 from pathlib import Path
+from InquirerPy.inquirer import text
+from magic_cmd.run_cmd import run_cmd
 
 def get_tools() -> list[tuple[str,Callable]]:
     tools = import_module('tools')
     return [ (n,tool) 
             for n,tool in getmembers(tools) 
             if isfunction(tool)]
-    
+
+project_help = ('The name of project/cmd','positional') 
+cmd_help = ('The subcommand','positional') 
+args_help = ('The args and kw args of the subcomand','positional') 
 class MagicToolBox(object):
     
     """
@@ -21,7 +26,12 @@ class MagicToolBox(object):
     
  
     
-    commands = 'create_project','init','add_function' 
+    commands = (
+                'create_project',
+                'init',
+                'add_function',
+                'create_test',
+            ) 
     
     def create_project(self,name:('The name of project','positional')):
         '''
@@ -93,7 +103,27 @@ if __name__ == '__main__':
         if tools.exists():
             raise Exception('tools.py already exists')
         self.create_project(self, '') 
-   
+
+    def create_test(self,
+                    project:project_help,
+                    cmd:cmd_help,
+                    *args:args_help,
+                    ):
+        '''
+        Creates test for CLI. The test cmd will be ran, and the
+        user will either accept or reject output. If accepted,
+        The output will be inserted into a string of python test and 
+        written to python test file. 
+        '''
+        if not Path(f'{project}.py').exists():
+            raise Exception(f'{project}.py does not exsit maybe run init')
+        help_out = set(run_cmd(f'python {project}.py -h',True)[-1].split('  '))
+        if cmd not in help_out:
+            raise Exception(f'{cmd} has not been added maybe run add_function {cmd}')
+            
+        args = ' '.join(args)
+        cmd = f'python {project}.py {cmd} {args}'
+        print(cmd)
 
 def main():
     Interpreter.call(MagicToolBox)
